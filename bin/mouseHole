@@ -52,7 +52,7 @@ opts = OptionParser.new do |opts|
   opts.on("-t", "--[no-]tidy",    "Use Tidy?") do |t|
     options.tidy = t
   end
-  
+
   opts.on("-v", "--verbose", "Run verbosely") do |v|
     options.log_level = Logger::INFO
   end
@@ -60,21 +60,21 @@ opts = OptionParser.new do |opts|
   opts.on("--log filename", "Log to a file (defaults to '-' which is STDOUT)") do |l|
     options.server_log = l
   end
-  
+
   opts.on("--debug", "Run with debugging data (proxy details, SQL queries)") do |v|
     options.log_level = Logger::DEBUG
   end
 
   opts.separator ""
   opts.separator "Common options:"
-  
+
   # No argument, shows at tail.  This will print an options summary.
   # Try it and see!
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
     exit
   end
-  
+
   # Another typical switch to print the version.
   opts.on_tail("--version", "Show version") do
     puts MouseHole::VERSION
@@ -101,7 +101,7 @@ options.share_dir = File.join( options.app_dir, 'share' )
 options.auto_marshal = %{Marshal.load( #{ Marshal.dump( options ).dump } )}
 options.database ||= {:adapter => 'sqlite3', :database => File.join( options.mouse_dir, '+DATA' )}
 
-options.logger = 
+options.logger =
   case options.server_log
   when "-"
     Logger.new STDOUT
@@ -159,8 +159,8 @@ when "mongrel"
 #     require 'erb'
 #     a2_dir = File.join( options.share_dir, 'apache2' )
 #     a2_temp = File.join( options.temp_dir, 'apache2' )
-#     a2_path = 
-#         `which apache2ctl 2>/dev/null; whereis apache2ctl; 
+#     a2_path =
+#         `which apache2ctl 2>/dev/null; whereis apache2ctl;
 #          which apachectl 2>/dev/null; whereis apachectl`.
 #             scan( %r!\s/\S+/apache2?ctl\s! ).detect { |ctl| ctl.strip!
 #                 `#{ctl} -v` =~ %r!Apache/2\.! }
@@ -181,7 +181,7 @@ when "mongrel"
 #             options.modules[mod_name.gsub( /_module$/, '' )] = mod_path
 #         end
 #     end
-# 
+#
 #     files = {}
 #     Dir["#{a2_dir}/**/*"].each do |from_file|
 #         next if File.directory? from_file
