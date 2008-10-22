@@ -9,7 +9,7 @@ module MouseHole
       if (tmp = self.assoc(k))
         tmp[1] = v
       else
-        self << [k, v] 
+        self << [k, v]
       end
       v
     end
@@ -21,9 +21,9 @@ module MouseHole
     def initialize(uri, status, headers)
       @location = uri
       @status = status
-      @input = Camping.qsp(uri.query)
+      @input = Camping.qs_parse(uri.query)
       @headers = PageHeaders[*headers]
-      ctype = @headers['Content-Type'].split(";")
+      ctype = (@headers['Content-Type'] or []).split(";")
       ctype = ctype.first if ctype.respond_to? :first
       if ctype
         @converter = Converters.detect_by_mime_type ctype
@@ -32,10 +32,10 @@ module MouseHole
 
     # Used for loading marshalled Page object into Sandbox
     def self.restore(attribs)
-      page = Page.new(attribs[Attributes.index(:location)], nil, 
+      page = Page.new(attribs[Attributes.index(:location)], nil,
                       attribs[Attributes.index(:headers)])
 
-      Attributes.each_with_index do |attr, ndx| 
+      Attributes.each_with_index do |attr, ndx|
         page.send(attr.to_s+'=', attribs[ndx])
       end
 
@@ -74,7 +74,7 @@ module MouseHole
         @document = body
         false
       end
-    end 
+    end
 
     def body=(str)
       @document = str
